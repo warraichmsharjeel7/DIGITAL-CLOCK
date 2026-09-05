@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock</title>
+    
+    <style>
+        body {
+            background-color: #1a1a1a;
+            display: flex;
+            flex-direction: column; /* Heading ko clock ke upar lane ke liye */
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Heading Style */
+        .main-heading {
+            color: #ffffff;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            font-weight: 300;
+        }
+
+        .clock-container {
+            background-color: #0c0c0c;
+            padding: 45px 65px;
+            border: 2px solid #ffcc00;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.5), inset 0 0 10px rgba(255, 204, 0, 0.2);
+        }
+
+        .time {
+            color: #ffcc00;
+            font-size: 85px;
+            font-weight: 700;
+            text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+
+        .date {
+            color: #ffffff;
+            font-size: 26px;
+            font-weight: 400;
+            opacity: 0.8;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="main-heading">Digital Clock</h1>
+
+    <div class="clock-container">
+        <div id="time" class="time">00:00:00 PM</div>
+        <div id="date" class="date">Loading...</div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            const hourStr = String(hours).padStart(2, '0');
+
+            document.getElementById('time').textContent = `${hourStr}:${minutes}:${seconds} ${ampm}`;
+
+            const options = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+            document.getElementById('date').textContent = now.toLocaleDateString('en-US', options);
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
